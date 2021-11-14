@@ -124,9 +124,9 @@ function onMouseEventHandler(
 
 export interface OverlayTriggerInstance {
   root: Element;
-  updatePosition?: () => void;
-  open?: () => void;
-  close?: () => void;
+  updatePosition: () => void;
+  open: () => void;
+  close: () => void;
 }
 
 const defaultTrigger = ['hover', 'focus'];

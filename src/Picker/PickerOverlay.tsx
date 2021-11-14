@@ -1,4 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
+import isNil from 'lodash/isNil';
 import omit from 'lodash/omit';
 import addStyle from 'dom-lib/addStyle';
 import getWidth from 'dom-lib/getWidth';
@@ -43,12 +44,12 @@ const PickerOverlay: RsRefForwardingComponent<'div', PickerOverlayProps> = React
       classPrefix = 'picker-menu',
       autoWidth,
       className,
-      placement,
+      placement = 'bottomStart',
       target,
       ...rest
     } = props;
 
-    const overlayRef = useRef();
+    const overlayRef = useRef(null);
     const handleResize = useCallback(() => {
       const instance = target?.current;
 
@@ -58,17 +59,17 @@ const PickerOverlay: RsRefForwardingComponent<'div', PickerOverlayProps> = React
     }, [target, placement]);
 
     useElementResize(
-      useCallback(() => overlayRef.current, []),
+      useCallback(() => overlayRef.current!, []),
       handleResize
     );
     useEffect(() => {
       const toggle = target?.current;
 
-      if (autoWidth && toggle.root) {
+      if (autoWidth && toggle?.root) {
         // Get the width value of the button,
         // and then set it to the menu to make their width consistent.
         const width = getWidth(getDOMNode(toggle.root));
-        addStyle(overlayRef.current, 'min-width', `${width}px`);
+        addStyle(overlayRef.current!, 'min-width', `${width}px`);
       }
     }, [autoWidth, target, overlayRef]);
 
